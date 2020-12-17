@@ -15,6 +15,9 @@
       <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
       <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
       <script src="utils/firebaseConfig.js"></script>
+      <!--Sweet Alert 2-->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
       <!--CSS-->
       <link rel="stylesheet" type="text/css" href="assets/css/index.css">
       <!--Index-->
@@ -73,7 +76,7 @@
       <div class="album py-5">
          <div class="container">
             <div class="row">
-               <div class="col-md-4 col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -87,7 +90,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -101,7 +104,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -118,7 +121,7 @@
                <div class="col-lg-12 col-md-12 col-sm-12" id="offer-div-1">
                   <img class="img-fluid offer" src="assets/public/imageload/loading2.gif">
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -132,7 +135,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -146,7 +149,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -166,7 +169,7 @@
                <div class="col-lg-6 col-md-6 col-sm-12" id="offer-div-3">
                   <img class="img-fluid offer" src="assets/public/imageload/loading3.gif">
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -180,7 +183,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -194,7 +197,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-4  col-sm-12">
+               <div class="col-md-4">
                   <div class="card mb-4 shadow-sm">
                      <img class="product-url" src="assets/public/imageload/loading1.gif">
                      <div class="card-body">
@@ -220,8 +223,8 @@
          <div class="modal-dialog modal-lg" >
             <div class="modal-content">
                <div class="modal-body">
-                  <div class="row">
-                     <div class="col-lg-5">
+                  <div id="rowModal" class="row">
+                     <div id="empty-image" class="col-lg-5">
                         <img class="d-block w-100 rounded" id="productUrl" src="" >
                      </div>
                      <div class="col-lg-7">
@@ -242,7 +245,7 @@
                            </div>
                         </div>
                         <div class="card-body">
-                           <div class="text-center">
+                           <div id="button-modal" class="text-center">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <button onclick="location.href='login.html'" class="modal-cart-button btn btn-primary">Add to cart
                               <i class="fas fa-cart-plus ml-2" aria-hidden="true"></i>
