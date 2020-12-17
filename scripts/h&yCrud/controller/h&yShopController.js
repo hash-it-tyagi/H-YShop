@@ -6,13 +6,6 @@ function registerEvents(){
         document.getElementById("sign-out").addEventListener("click",signOut);
     }
 
-    loadOffer();
-    loadCategory();
-
-    if(document.getElementById("search")){
-        document.getElementById("search").addEventListener("click",searchProduct);
-    }
-
     var viewButtons = document.getElementsByClassName("button-view");
     for(let button of viewButtons){
         button.addEventListener("click",viewProduct);
@@ -21,6 +14,13 @@ function registerEvents(){
     var cartButtons = document.getElementsByClassName("button-cart");
     for(let button of cartButtons){
         button.addEventListener("click",addToCart);
+    }
+
+    loadOffer();
+    loadCategory();
+
+    if(document.getElementById("search")){
+        document.getElementById("search").addEventListener("click",searchProduct);
     }
 }
 
@@ -227,14 +227,66 @@ function callBackForSignOut(bool,userObject,localToken){
 
 //VIEW PRODUCT:
 function viewProduct(){
-    var buttonId = this.id;
-    var arr = buttonId.split("-");
-    var productCategory = arr[0];
-    var productId = arr[1];
-    var modalCartButton = document.getElementsByClassName("modal-cart-button")[0];
-    modalCartButton.id = buttonId;
+    if(this.id == ""){
+        let imgDiv = document.getElementById("empty-image");
+        let pName = document.getElementById("productName");
+        let pPrice = document.getElementById("productPrice");
+        let pColor = document.getElementById("productColor");
+        let pDescription = document.getElementById("productDescription");
+        let about = document.getElementById("about");
 
-    productOperations.search(callBackForViewProduct,productId,productCategory,true);
+        if(document.getElementsByClassName("modal-cart-button")[0]){
+            let cartButton = document.getElementsByClassName("modal-cart-button")[0];
+            cartButton.parentElement.removeChild(cartButton);
+        }
+        if(document.getElementById("productUrl")){
+            imgDiv.parentElement.removeChild(imgDiv);
+        }
+
+        pName.parentElement.className = "col-lg-12";
+        pName.innerText = "";
+        pPrice.innerText = "";
+        pColor.innerText = "Products Still Loading";
+        about.innerText = "";
+        pDescription.innerText = "Products are still loading, Please wait till the products are loaded.";
+    }
+    else{
+        let buttonId = this.id;
+        let arr = buttonId.split("-");
+        let productCategory = arr[0];
+        let productId = arr[1];
+
+        if(document.getElementsByClassName("modal-cart-button")[0]){
+            let modalCartButton = document.getElementsByClassName("modal-cart-button")[0];
+            modalCartButton.id = buttonId;
+
+            productOperations.search(callBackForViewProduct,productId,productCategory,true);
+        }
+        else{
+            let newCartButton = document.createElement("button");
+            newCartButton.className = "newEvent button-cart modal-cart-button btn btn-primary";
+            if(document.getElementById("welcome-user")){
+                newCartButton.addEventListener("click",addToCart);
+                newCartButton.id = buttonId;
+            }
+            else{
+                newCartButton.onclick = ()=>{
+                    location.href = "login.html";
+                };
+            }
+            newCartButton.innerText = "Add To Cart";
+
+            let icon = document.createElement("i");
+            icon.className = "fas fa-cart-plus ml-2";
+            icon["area-hidden"] = true;
+            newCartButton.appendChild(icon);
+
+            let parentDiv = document.getElementById("button-modal");
+            parentDiv.appendChild(newCartButton);
+
+            productOperations.search(callBackForViewProduct,productId,productCategory,true);
+        }
+    }
 }
 
 //CALLBACK (VIEW PRODUCT);
@@ -246,7 +298,27 @@ function callBackForViewProduct(bool,productObject){
     var productDescription = document.getElementById("productDescription");
 
     if(bool == false){
-        productUrl.src = productObject.productUrl;
+        if(document.getElementById("productUrl")){
+            productUrl.src = productObject.productUrl;
+        }
+        else{
+            let div = document.createElement("div");
+            div.id = "empty-image";
+            div.className = "col-lg-5";
+
+            let image = document.createElement("img");
+            image.className = "d-block w-100 rounded";
+            image.style = "margin-left: 0%";
+            image.id = "productUrl";
+            image.src = productObject.productUrl;
+
+            div.appendChild(image);
+            let parentRow = document.getElementById("rowModal");
+            parentRow.appendChild(div);
+
+            let pNameParent = document.getElementById("productName");
+            pNameParent.parentElement.className = "col-lg-7";
+        }
         productName.innerText = productObject.productName;
         productPrice.innerText = "Product Price: " + "\u20B9" + " " + productObject.productPrice;
         productColor.innerText = "Product Color: " + productObject.productColor;
@@ -265,6 +337,14 @@ function addToCart(){
     var customerName = document.getElementById("welcome-user").innerText;
 
     cartOperations.searchCart(callBackForCart,customerName.split(" ")[1],productCategory,productId,true);
+
+    if(document.getElementsByClassName("newEvent")[0]){
+        swal.fire({
+            icon: "success",
+            title: "Product Added In The Cart",
+            text: "Your product is added into the cart. Thank You for the purchase."
+        });
+    }
 }
 
 //CALLBACK (CART):
