@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Sign Up</title>
+      <!--Bootstrap-->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <!--Font Awesome-->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+      <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+      <!--Firebase-->
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+      <script src="utils/firebaseConfig.js"></script>
+      <!--CSS-->
+      <link rel="stylesheet" type="text/css" href="assets/css/signup.css">
+      <!--Sign Up-->
+      <script src="scripts/userCrud/controller/signupController.js"></script>
+      <script src="utils/regex.js"></script>
+      <script src="scripts/userCrud/model/user.js"></script>
+      <script src="scripts/userCrud/model/userOperations.js"></script>
+   </head>
+   <body>
+      <div class="modal-dialog text-center">
+         <div class="col-sm-8 main-section">
+            <div class="modal-content">
+               <div class="col-12 user-img">
+                  <img src="assets/public/face1.png">
+               </div>
+               <div class="form-group">
+                  <input id="username" type="text" class="form-control input-field" placeholder="Enter Username">
+                  <span class="blank-field"></span>
+               </div>
+               <div class="form-group">
+                  <input id="email" type="email" class="form-control input-field" placeholder="Enter Email ID">
+                  <span class="blank-field"></span>
+               </div>
+               <div class="form-group">
+                  <input id="phoneNumber" type="tel" class="form-control input-field" placeholder="Enter Phone Number">
+                  <span class="blank-field"></span>
+               </div>
+               <div class="form-group">
+                  <input id="address" type="text" class="form-control input-field" placeholder="Enter Address">
+                  <span class="blank-field"></span>
+               </div>
+               <div class="form-group">
+                  <input id="password" type="password" class="form-control input-field" placeholder="Enter Password">
+                  <span class="blank-field"></span>
+               </div>
+               <div class="form-group">
+                  <input id="confirmPassword" type="password" class="form-control input-field" placeholder="Confirm Password">
+                  <span class="blank-field"></span>
+                  <span id="empty-error"></span>
+               </div>
+               <div>
+                  <button id="add" class="btn"><i class="fas fa-pencil-alt"></i>Sign Up</button>
+                  <button onclick="location.href = 'login.html'" class="btn"><i class="fas fa-sign-in-alt"></i>Login</button>
+                  <span id="error"></span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

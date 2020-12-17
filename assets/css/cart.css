@@ -1,0 +1,21 @@
+body{
+    background: #255d78;
+    background: -webkit-linear-gradient(to right, #255d78, #09161c);
+    background: linear-gradient(to right, #255d78, #09161c);
+    min-height: 100vh;
+}
+.my-nav-bar{
+    width: 58%;
+}
+.message{
+    margin-bottom: 5px !important;
+}
+.product-not-found::placeholder{ 
+    color: red;
+}
+.product-found::placeholder{
+    color: gray;
+}
+#proceed-to-checkout{
+    color: white !important;
+}

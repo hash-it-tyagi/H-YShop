@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <title>Admin Dashboard</title>
+      <!--Bootstrap-->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <!--Font Awesome-->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+      <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+      <!--Firebase-->
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+      <script src="utils/firebaseConfig.js"></script>
+      <!--CSS-->
+      <link rel="stylesheet" type="text/css" href="assets/css/admindashboard.css">
+      <!--Admin Dashboard-->
+      <script src="utils/authentication.js"></script>
+      <script src="utils/compareToken.js"></script>
+      <script src="scripts/adminCrud/model/adminOperations.js"></script>
+      <script src="scripts/productCrud/controller/productController.js"></script>
+      <script src="scripts/productCrud/model/product.js"></script>
+      <script src="scripts/productCrud/model/dummyProduct.js"></script>
+      <script src="scripts/productCrud/model/productOperations.js"></script>
+   </head>
+   <body>
+      <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+         <h4 id="wlcm">Welcome</h4>
+         &nbsp; &nbsp;
+         <h4>Admin</h4>
+         <input id="search-field" class="form-control form-control-dark w-100" type="text" placeholder="Enter Product ID" aria-label="Search">
+         <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+               <select id="search-category" class="custom-select search-dropdown">
+                  <option selected>Select Category</option>
+               </select>
+            </li>
+         </ul>
+         <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+               <button id="search" class="btn btn-secondary">Search</button>
+            </li>
+         </ul>
+         <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+               <a id="sign-out" class="nav-link" href="javascript:void(0)">Sign Out</a>
+            </li>
+         </ul>
+      </nav>
+      <div class="container-fluid">
+         <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+               <div class="sidebar-sticky">
+                  <ul class="nav flex-column">
+                     <li class="nav-item">
+                        <a class="nav-link" href="admindashboard.html">
+                        Products
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="offer.html">
+                        Offers
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="order.html">
+                        Orders
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                  <h1 class="h2">Product Operations</h1>
+               </div>
+               <div>
+                  <div class="form-group">
+                     <label for="">Product ID</label>
+                     <input id="productId" class="form-control input-field" type="text" placeholder="Enter Product ID">
+                     <span class="blank-field"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Product Name</label>
+                     <input id="productName" class="form-control input-field" type="text" placeholder="Enter Product Name">
+                     <span class="blank-field"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Product Description</label>
+                     <textarea id="productDescription" class="form-control input-field" cols="30" rows="10" placeholder="Enter Product Description"></textarea>
+                     <span class="blank-field"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Product Price</label>
+                     <input id="productPrice" class="form-control input-field" placeholder="Enter Product Price">
+                     <span class="blank-field"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Product Image URL</label>
+                     <input id="productUrl" class="form-control input-field" type="url" placeholder="Enter Product Image URL">
+                     <span class="blank-field"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Product Color</label>
+                     <input id="productColor" class="form-control input-field" type="text" placeholder="Enter Product Color">
+                     <span class="blank-field"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Product Category</label>
+                     <select id ="select-category" class="custom-select input-field">
+                        <option selected>Select Category</option>
+                     </select>
+                     <span class="blank-field"></span>
+                     <span id="empty-error"></span>
+                  </div>
+                  <div class="form-group" id="dynamic-div">
+                     <button id="add" class="btn btn-success">Add</button>
+                     <button id="update" class="btn btn-dark">Update</button>
+                     <button id="delete" class="btn btn-danger">Delete</button>
+                     <button id="show" class="btn btn-primary">Show</button>
+                     <select id="show-category" class="custom-select show-dropdown">
+                        <option selected>Select Category</option>
+                     </select>
+                     <button id="sort" class="btn btn-primary">Sort</button>
+                     <select id="sort-category" class="custom-select sort-dropdown">
+                        <option selected>Sort By</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                     </select>
+                     <button id="delete-all" class="btn btn-danger">Delete All</button>
+                  </div>
+                  <table class="table table-bordered">
+                     <thead class="thead-dark">
+                        <tr>
+                           <th>Product Color</th>
+                           <th>Product Description</th>
+                           <th>Product ID</th>
+                           <th>Product Name</th>
+                           <th>Product Price</th>
+                           <th>Product URL</th>
+                           <th>Operations</th>
+                        </tr>
+                     </thead>
+                     <tbody id="products">
+                     </tbody>
+                  </table>
+               </div>
+         </div>
+         </main>
+      </div>
+      </div>
+   </body>
+</html>

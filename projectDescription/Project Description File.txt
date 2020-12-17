@@ -1,0 +1,37 @@
+Project Title: Online Shopping System:
+
+Online Shopping is a system where the users can search and buy different products and admin is responsible for adding the products into the system.
+
+Types of Users:
+1. Admin
+2. Customer
+
+Admin Modules:
+1. Product CRUD.
+2. View, Search and Delete Placed Order.
+3. Customer Details.
+
+Customer Modules:
+1. Search Product.
+2. Cart CRUD.
+3. Purchase.
+4. Make Payment.
+5. Purchase History.
+
+Technologies USed:
+1. HTML5.
+2. Css3.
+3. Bootstrap4.
+4. Vanilla JavaScript.
+
+Started On:
+20-07-19
+
+Ended On:
+
+No. Of Hours:
+Day 1: 
+Day 2: 
+Day 3: 
+Day 4: 
+Day 5: 

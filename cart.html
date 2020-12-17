@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Shopping Cart</title>
+      <!--Bootstrap-->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <!--Font Awesome-->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+      <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+      <!--Firebase-->
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+      <script src="utils/firebaseConfig.js"></script>
+      <!--CSS-->
+      <link rel="stylesheet" type="text/css" href="assets/css/cart.css">
+      <!--Cart-->
+      <script src="scripts/cartCrud/controller/cartController.js"></script>
+      <script src="scripts/cartCrud/model/cartOperations.js"></script>
+      <script src="utils/authentication.js"></script>
+      <script src="utils/compareToken.js"></script>
+      <script src="scripts/offerCrud/model/offerOperations.js"></script>
+      <script src="scripts/userCrud/model/userOperations.js"></script>
+      <script src="scripts/productCrud/model/productOperations.js"></script>
+      <script src="scripts/orderCrud/model/orderOperations.js"></script>
+      <script src="scripts/orderCrud/model/order.js"></script>
+      <!--Sweet Alert 2-->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+   </head>
+   <body>
+      <header>
+         <div class="navbar navbar-dark bg-dark shadow-sm">
+         <div class="container contain d-flex justify-content-between my-nav-bar" >
+            <a href="h&yshop.html" style="text-decoration: none;"><strong class="navbar-brand d-flex align-items-center"><i class="fas fa-shopping-bag fa-2x"></i>&nbsp; H&Y Shop</strong></a>
+            <div class="form-inline">
+               <input id="search-field" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+               <button id="search" class="btn btn-outline-info my-2 my-sm-0" type="button">Search</button>
+            </div>
+            <button id="sign-out" class="btn btn-outline-info"><i class="fas fa-sign-out-alt fa-lg"></i></button>
+            <strong id="welcome-user" class="navbar-brand d-flex align-items-center"></strong>
+         </div>
+      </header>
+      <div class="px-4 px-lg-0">
+         <div class="pb-5">
+            <div class="container">
+               <div class="row py-5">
+                  <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th scope="col" class="border-0 bg-light">
+                                    <div class="p-2 px-3 text-uppercase">Product</div>
+                                 </th>
+                                 <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Price</div>
+                                 </th>
+                                 <th scope="col" class="border-0 bg-light">
+                                  <div class="py-2 text-uppercase">Color</div>
+                               </th>
+                                 <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Quantity</div>
+                                 </th>
+                                 <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Remove</div>
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody id="cart-tbody">
+                              
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="row py-5 p-4 bg-white rounded shadow-sm">
+                  <div class="col-lg-6">
+                     <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Offer Code</div>
+                     <div class="p-4">
+                        <p class="font-italic mb-4">If you have an offer code, please enter it in the box below.</p>
+                        <div class="input-group mb-4 border rounded-pill p-2 message">
+                           <input id="offer" type="text" placeholder="Apply Offer" aria-describedby="button-addon3" class="form-control border-0">
+                           <div class="input-group-append border-0">
+                              <button id="apply-offer" type="button" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>Apply Offer</button>
+                           </div>
+                        </div>
+                        <span id="offer-message"></span>
+                     </div>
+                     <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Select Payment Mode</div>
+                     <div class="p-4">
+                        <div class="btn-group dropright">
+                           <button type="button" id="dropdownMenuButton" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             Payment Mode
+                           </button>
+                           &nbsp; &nbsp; &nbsp; <input id="payment-mode" disabled type="text">
+                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="javascript:paymentMode('Cash on Delivery')">Cash on Delivery</a>
+                              <a class="dropdown-item" href="javascript:paymentMode('Credit Card')">Credit Card</a>
+                              <a class="dropdown-item" href="javascript:paymentMode('Debit Card')">Debit Card</a>
+                              <a class="dropdown-item" href="javascript:paymentMode('Paypal')">Paypal</a>
+                              <a class="dropdown-item" href="javascript:paymentMode('Paytm')">Paytm</a>
+                           </div>
+                         </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                     <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+                     <div class="p-4">
+                        <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+                        <ul class="list-unstyled mb-4">
+                           <li class="d-flex justify-content-between py-3 border-bottom">
+                              <strong class="text-muted">Order Subtotal</strong>
+                              <strong id="subtotal-amount"></strong>
+                           </li>
+                           <li class="d-flex justify-content-between py-3 border-bottom">
+                              <strong class="text-muted">Shipping and handling</strong>
+                              <strong  id="shipping-charge"></strong>
+                           </li>
+                           <li class="d-flex justify-content-between py-3 border-bottom">
+                              <strong class="text-muted">Tax</strong>
+                              <strong id="tax-charge"></strong>
+                           </li>
+                           <li class="d-flex justify-content-between py-3 border-bottom">
+                              <strong class="text-muted">Offer Discount</strong>
+                              <strong id="offer-discount">&#x20B9; 0</strong>
+                           </li>
+                           <li class="d-flex justify-content-between py-3 border-bottom">
+                              <strong class="text-muted">Total</strong>
+                              <h5 id="total-amount" class="font-weight-bold"></h5>
+                           </li>
+                        </ul>
+                        <a id="proceed-to-checkout" class="btn btn-dark rounded-pill py-2 btn-block">Proceed to checkout</a>
+                        <div>
+                           <span id="empty-error"></span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <footer class="page-footer text-light font-small bg-dark">
+         <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a class="text-light" target="_blank" style="text-decoration: none;" href="https://github.com/hash-it-tyagi">github.com/hash-it-tyagi</a>
+         </div>
+      </footer>
+   </body>
+</html>
