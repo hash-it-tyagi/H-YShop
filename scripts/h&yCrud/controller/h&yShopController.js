@@ -330,20 +330,48 @@ function callBackForViewProduct(bool,productObject){
 
 //ADD TO CART:
 function addToCart(){
-    var buttonId = this.id;
-    var arr = buttonId.split("-");
-    var productCategory = arr[0];
-    var productId = arr[1];
-    var customerName = document.getElementById("welcome-user").innerText;
+    if(this.id == ""){
+        document.getElementsByClassName("titleModal")[0].innerText = "Products still loading";
+        document.getElementsByClassName("textModal")[0].innerText = "Products are still loading,";
+        document.getElementsByClassName("textModal")[1].innerText = "Please wait till the products are loaded.";
+        let p = document.getElementsByClassName("errorIcon")[0];
+        let i = document.createElement("i");
+        i.className = "fa fa-exclamation-triangle fa-4x";
 
-    cartOperations.searchCart(callBackForCart,customerName.split(" ")[1],productCategory,productId,true);
+        if(p.firstElementChild){
+            p.removeChild(p.firstElementChild);
+        }
+        p.appendChild(i);
 
-    if(document.getElementsByClassName("newEvent")[0]){
-        swal.fire({
-            icon: "success",
-            title: "Product Added In The Cart",
-            text: "Your product is added into the cart. Thank You for the purchase."
-        });
+    }
+    else{
+        document.getElementsByClassName("titleModal")[0].innerText = "Product Added In The Cart";
+        document.getElementsByClassName("textModal")[0].innerText = "Your product is added into the cart.";
+        document.getElementsByClassName("textModal")[1].innerText = "Thank You for the purchase.";
+        let p = document.getElementsByClassName("errorIcon")[0];
+        let i = document.createElement("i");
+        i.className = "fas fa-shopping-cart fa-4x";
+
+        if(p.firstElementChild){
+            p.removeChild(p.firstElementChild);
+        }
+        p.appendChild(i);
+
+        var buttonId = this.id;
+        var arr = buttonId.split("-");
+        var productCategory = arr[0];
+        var productId = arr[1];
+        var customerName = document.getElementById("welcome-user").innerText;
+
+        cartOperations.searchCart(callBackForCart,customerName.split(" ")[1],productCategory,productId,true);
+
+        if(document.getElementsByClassName("newEvent")[0]){
+            swal.fire({
+                icon: "success",
+                title: "Product Added In The Cart",
+                text: "Your product is added into the cart. Thank You for the purchase."
+            });
+        }
     }
 }
 
